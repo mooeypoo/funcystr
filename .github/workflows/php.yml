@@ -1,0 +1,55 @@
+name: PHP CI
+
+on:
+  push:
+    branches:
+      - main
+      - issue-*
+  pull_request:
+    branches:
+      - main
+      - issue-*
+
+jobs:
+  php-tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: php
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          coverage: none
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist
+      - name: Run tests
+        run: composer test
+
+  php-build:
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: php
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          coverage: none
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist
+      - name: Build dist
+        run: composer build
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: funcystr-php-dist
+          path: php/build
+          if-no-files-found: error
+
+
