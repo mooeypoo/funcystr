@@ -1,0 +1,17 @@
+# Exclude JS / dev files from Composer dist archives
+/node_modules/        export-ignore
+/dist/                export-ignore
+/test/                export-ignore
+/docs/                export-ignore
+/.github/             export-ignore
+/.vscode/             export-ignore
+/.idea/               export-ignore
+/.npmignore           export-ignore
+/package-lock.json    export-ignore
+/package.json         export-ignore
+/webpack.config.js    export-ignore
+/babel.config.js      export-ignore
+/.eslintrc            export-ignore
+/.eslintrc.*          export-ignore
+/.mocharc*            export-ignore
+/php/scripts/         export-ignore
